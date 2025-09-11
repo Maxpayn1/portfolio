@@ -16,7 +16,7 @@ const PROFILE = {
 };
 
 const PROJECTS = [
-  { id: 1, title: "Assets développement", type: "Professionnel", year: 2024, tech: ["Java"], description: "The desire to succeed in creating graphic assets for lightzino.", link: "#" },
+  { id: 1, title: "Assets développement", type: "Professionnel", year: 2025, tech: ["Java"], description: "The desire to succeed in creating graphic assets for lightzino.", link: "#" },
   { id: 2, title: "Portfolio", type: "Scolaire", year: 2025, tech: ["Nginx"], description: "Simply the creation of my own Portfolio without skills in development.", link: "https://portfoliomaxpayne.vercel.app/" },
 ];
 
@@ -146,7 +146,7 @@ export default function App() {
               {[
                 { k: "Projects", v: String(PROJECTS.length) },
                 { k: "Focus", v: "Design assets" },
-                { k: "Status", v: "Open to work" },
+                { k: "Status", v: "Searching to work" },
               ].map((s) => (
                 <div
                   key={s.k}
