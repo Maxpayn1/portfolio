@@ -22,6 +22,12 @@ const PROJECTS = [
 
 const SKILLS = ["Java", "Nginx", "UI/UX", "Figma", "TailwindCSS", "Framer Motion", "Git", "Linux"];
 
+const EXPERIENCES = [
+  { year: "2025", title: "Portfolio v1", desc: "Design + mise en ligne (Vercel), dark/light mode, animations." },
+  { year: "2024", title: "Assets graphique (Lightzino)", desc: "Création d’assets & déclinaisons visuelles." },
+  { year: "2023", title: "MOMA — Undergraduate", desc: "Parcours étudiant, bases dev & design." },
+];
+
 /* ====== UI ====== */
 const Pill = ({ children }) => (
   <span className="inline-flex items-center rounded-full border border-subtle px-2.5 py-1 text-xs font-medium">
@@ -50,6 +56,7 @@ function ProjectCard({ p }) {
       className="group block rounded-2xl border border-subtle bg-white dark:bg-white/5 backdrop-blur-sm p-5 hover:border-accent/50 hover:shadow-[0_10px_30px_-12px_rgba(139,92,246,0.45)] transition"
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -4 }}
       viewport={{ once: true }}
     >
       <div className="flex items-start justify-between gap-3">
@@ -129,21 +136,24 @@ export default function App() {
             </div>
 
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-fuchsia-500">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to fuchsia-500">
                 {PROFILE.title}
               </span>
             </h1>
 
-            {/* BARRE DE STATS VISIBLES */}
-            <div className="mt-5 grid grid-cols-3 gap-3 max-w-md">
+            {/* === STATS BAND === */}
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
               {[
                 { k: "Projects", v: String(PROJECTS.length) },
                 { k: "Focus", v: "Design assets" },
                 { k: "Status", v: "Open to work" },
               ].map((s) => (
-                <div key={s.k} className="rounded-2xl border border-subtle bg-white dark:bg-white/5 px-3 py-2">
-                  <div className="text-[10px] uppercase tracking-wide opacity-60">{s.k}</div>
-                  <div className="text-sm font-semibold">{s.v}</div>
+                <div
+                  key={s.k}
+                  className="rounded-2xl border border-subtle bg-white dark:bg-white/5 px-4 py-3 flex items-center justify-between"
+                >
+                  <span className="text-[11px] uppercase tracking-wide opacity-60">{s.k}</span>
+                  <span className="text-sm font-semibold">{s.v}</span>
                 </div>
               ))}
             </div>
@@ -178,9 +188,9 @@ export default function App() {
           </motion.aside>
         </div>
 
-        {/* SKILLS — NOUVELLE SECTION TRÈS VISIBLE */}
+        {/* === SKILLS SECTION === */}
         <Section id="skills" icon={Code2} title="Skills" className="mt-12">
-          <div className="rounded-2xl border border-subtle p-5 bg-white dark:bg-white/5">
+          <div className="rounded-2xl border border-subtle px-5 py-4 bg-white dark:bg-white/5">
             <div className="flex flex-wrap gap-2">
               {SKILLS.map((s) => (
                 <span key={s} className="text-sm rounded-full border border-subtle px-3 py-1.5 bg-white dark:bg-transparent">
@@ -191,6 +201,31 @@ export default function App() {
           </div>
         </Section>
 
+        {/* === TIMELINE / EXPERIENCES === */}
+        <section className="mt-10">
+          <div className="flex items-center gap-2 mb-4">
+            <Code2 className="w-5 h-5 text-accent" />
+            <h2 className="text-xl font-semibold">Experience</h2>
+          </div>
+          <div className="relative pl-5">
+            <div className="absolute left-2 top-0 bottom-0 w-px bg-white/20 dark:bg-white/10" />
+            <ul className="space-y-5">
+              {EXPERIENCES.map((e, i) => (
+                <li key={i} className="relative">
+                  <span className="absolute -left-[6px] top-1 block w-3 h-3 rounded-full bg-accent/80 ring-4 ring-accent/20" />
+                  <div className="rounded-2xl border border-subtle bg-white dark:bg-white/5 px-4 py-3">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="text-sm font-semibold">{e.title}</div>
+                      <Pill>{e.year}</Pill>
+                    </div>
+                    <p className="mt-1 text-sm opacity-85">{e.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         {/* PROJETS */}
         <Section id="projects" icon={Code2} title="Projets" className="mt-12">
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-8">
@@ -198,12 +233,15 @@ export default function App() {
           </div>
         </Section>
 
-        {/* CTA VIOLET AVANT CONTACT */}
-        <div className="mt-14 rounded-2xl border border-accent/30 bg-accent/10 p-5">
-          <p className="text-sm">
-            Want to collaborate on visuals or a frontend?
-            <a href={`mailto:${PROFILE.links.email}`} className="underline ml-1">Let&apos;s talk</a>
-          </p>
+        {/* CTA */}
+        <div className="mt-14 rounded-2xl border border-accent/30 bg-accent/10 p-5 flex items-center justify-between gap-4">
+          <p className="text-sm">Want to collaborate on visuals or a frontend?</p>
+          <a
+            href={`mailto:${PROFILE.links.email}`}
+            className="inline-flex items-center rounded-full border border-accent/50 px-4 py-2 text-sm hover:bg-accent/20"
+          >
+            Let&apos;s talk
+          </a>
         </div>
 
         {/* CONTACT */}
