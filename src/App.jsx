@@ -20,12 +20,13 @@ const PROJECTS = [
   { id: 2, title: "Portfolio", type: "Scolaire", year: 2025, tech: ["Nginx"], description: "Simply the creation of my own Portfolio without skills in development.", link: "https://portfoliomaxpayne.vercel.app/" },
 ];
 
-const SKILLS = ["Java", "Nginx", "UI/UX", "Figma", "TailwindCSS", "Framer Motion", "Git", "Linux"];
+const SKILLS = ["Java", "Analyse socio-économique",  "Figma",  "Git", "reactive"];
 
 const EXPERIENCES = [
   { year: "2025", title: "Portfolio v1", desc: "Design + mise en ligne (Vercel), dark/light mode, animations." },
   { year: "2024", title: "Assets graphique (Lightzino)", desc: "Création d’assets & déclinaisons visuelles." },
-  { year: "2023", title: "MOMA — Undergraduate", desc: "Parcours étudiant, bases dev & design." },
+  { year: "2025", title: "MOMA — Undergraduate", desc: "Parcours étudiant, bases dev & design." },
+  { year: "2025", title: "Decathlon CDD", desc: "Seasons Jobs." },
 ];
 
 /* ====== UI ====== */
