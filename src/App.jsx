@@ -1,3 +1,4 @@
+```tsx
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Moon, Sun, ExternalLink, Code2, Star } from "lucide-react";
@@ -130,6 +131,21 @@ export default function App() {
                 {PROFILE.title}
               </span>
             </h1>
+
+            {/* 2) petite barre de stats */}
+            <div className="mt-5 grid grid-cols-3 gap-3 max-w-md">
+              {[
+                { k: "Projects", v: String(PROJECTS.length) },
+                { k: "Focus", v: "Design assets" },
+                { k: "Status", v: "Open to work" },
+              ].map((s) => (
+                <div key={s.k} className="rounded-2xl border border-subtle bg-white dark:bg-white/5 px-3 py-2">
+                  <div className="text-[10px] uppercase tracking-wide opacity-60">{s.k}</div>
+                  <div className="text-sm font-semibold">{s.v}</div>
+                </div>
+              ))}
+            </div>
+
             <p className="mt-3 text-base opacity-90 max-w-prose">{PROFILE.bio}</p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
@@ -143,11 +159,20 @@ export default function App() {
                 <Linkedin className="w-4 h-4" /> LinkedIn
               </a>
             </div>
+
+            {/* 3) skills cloud discret */}
+            <div className="mt-5 flex flex-wrap gap-2 max-w-xl">
+              {["Java", "Nginx", "UI/UX", "Figma", "Tailwind", "Framer Motion"].map((t) => (
+                <span key={t} className="text-xs rounded-full border border-subtle px-2.5 py-1 bg-white dark:bg-white/5">
+                  {t}
+                </span>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Colonne droite */}
+          {/* Colonne droite — 1) aside sticky */}
           <motion.aside
-            className="lg:col-span-5 rounded-3xl border border-subtle bg-white dark:bg-white/5 p-6"
+            className="lg:col-span-5 lg:sticky top-24 rounded-3xl border border-subtle bg-white dark:bg-white/5 p-6"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
           >
@@ -160,15 +185,23 @@ export default function App() {
           </motion.aside>
         </div>
 
-        {/* PROJETS (sans filtrer) */}
+        {/* PROJETS */}
         <Section id="projects" icon={Code2} title="Projets" className="mt-14">
-          <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-7">
             {PROJECTS.map((p) => <ProjectCard key={p.id} p={p} />)}
           </div>
         </Section>
 
+        {/* 4) Bandeau CTA léger */}
+        <div className="mt-14 rounded-2xl border border-accent/30 bg-accent/10 p-5">
+          <p className="text-sm">
+            Want to collaborate on visuals or a frontend?{" "}
+            <a href={`mailto:${PROFILE.links.email}`} className="underline ml-1">Let&apos;s talk</a>
+          </p>
+        </div>
+
         {/* CONTACT */}
-        <Section id="contact" icon={Mail} title="Contact" className="mt-14">
+        <Section id="contact" icon={Mail} title="Contact" className="mt-10">
           <div className="rounded-2xl border border-subtle p-5 bg-white dark:bg-white/5">
             <p className="text-sm opacity-90">
               Contact me :{" "}
@@ -186,3 +219,4 @@ export default function App() {
     </div>
   );
 }
+```
