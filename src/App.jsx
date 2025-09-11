@@ -111,7 +111,7 @@ export default function App() {
         <div className="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between">
           <a href="#home" className="font-semibold tracking-tight">{PROFILE.name}</a>
           <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#projects" className="opacity-80 hover:opacity-100">Projets</a>
+            <a href="#projects" className="opacity-80 hover:opacity-100">Projects</a>
             <a href="#contact" className="opacity-80 hover:opacity-100">Contact</a>
           </nav>
           <button
@@ -147,7 +147,7 @@ export default function App() {
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <a href={`mailto:${PROFILE.links.email}`} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm hover:border-accent/60">
-                <Mail className="w-4 h-4" /> Me contacter
+                <Mail className="w-4 h-4" /> Speak to me there
               </a>
               <a href={PROFILE.links.github} target="_blank" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm hover:border-accent/60">
                 <Github className="w-4 h-4" /> GitHub
