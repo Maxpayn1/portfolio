@@ -22,7 +22,7 @@ const PROJECTS = [
 
 /* ====== UI ====== */
 const Pill = ({ children }) => (
-  <span className="inline-flex items-center rounded-full border border-white/10 px-2.5 py-1 text-xs font-medium">
+  <span className="inline-flex items-center rounded-full border border-subtle px-2.5 py-1 text-xs font-medium">
     {children}
   </span>
 );
@@ -45,7 +45,7 @@ function ProjectCard({ p }) {
       href={p.link}
       target="_blank"
       rel="noreferrer"
-      className="group block rounded-2xl border border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur-sm p-5 hover:border-accent/50 hover:shadow-[0_10px_30px_-12px_rgba(139,92,246,0.45)] transition"
+      className="group block rounded-2xl border border-subtle bg-white dark:bg-white/5 backdrop-blur-sm p-5 hover:border-accent/50 hover:shadow-[0_10px_30px_-12px_rgba(139,92,246,0.45)] transition"
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -102,12 +102,13 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen text-neutral-900 dark:text-neutral-100
-      bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(139,92,246,0.25),transparent),linear-gradient(#ffffff,#ffffff)]
-      dark:bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(139,92,246,0.15),transparent),linear-gradient(#0a0a0a,#0a0a0a)]">
-      
+    <div
+      className="min-h-screen text-lightText dark:text-neutral-100
+      bg-lightBg
+      dark:bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(139,92,246,0.15),transparent),linear-gradient(#0a0a0a,#0a0a0a)]"
+    >
       {/* NAV */}
-      <header className="sticky top-0 z-20 border-b border-white/10 bg-white/75 dark:bg-black/50 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b border-subtle bg-white/90 dark:bg-black/50 backdrop-blur">
         <div className="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between">
           <a href="#home" className="font-semibold tracking-tight">{PROFILE.name}</a>
           <nav className="hidden md:flex items-center gap-6 text-sm">
@@ -116,10 +117,10 @@ export default function App() {
           </nav>
           <button
             onClick={() => setDark((d) => !d)}
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-sm hover:border-accent/60"
-            aria-label="Basculer le thème"
+            className="inline-flex items-center gap-2 rounded-full border border-subtle px-3 py-1.5 text-sm hover:border-accent/60"
+            aria-label="Toggle theme"
           >
-            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />} Thème
+            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />} Theme
           </button>
         </div>
       </header>
@@ -128,13 +129,13 @@ export default function App() {
       <main id="home" className="mx-auto max-w-6xl px-6 py-10 md:py-14">
         {/* HERO EN 2 COLONNES */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          {/* Colonne gauche : contenu */}
+          {/* Colonne gauche */}
           <motion.div
             className="lg:col-span-7"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-xs mb-4 bg-white/60 dark:bg-white/5">
+            <div className="inline-flex items-center gap-2 rounded-full border border-subtle px-3 py-1 text-xs mb-4 bg-white">
               <Star className="w-3 h-3 text-accent" /> Portfolio
             </div>
 
@@ -146,36 +147,36 @@ export default function App() {
             <p className="mt-3 text-base opacity-90 max-w-prose">{PROFILE.bio}</p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <a href={`mailto:${PROFILE.links.email}`} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm hover:border-accent/60">
+              <a href={`mailto:${PROFILE.links.email}`} className="inline-flex items-center gap-2 rounded-full border border-subtle px-4 py-2 text-sm hover:border-accent/60 bg-white">
                 <Mail className="w-4 h-4" /> Speak to me there
               </a>
-              <a href={PROFILE.links.github} target="_blank" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm hover:border-accent/60">
+              <a href={PROFILE.links.github} target="_blank" className="inline-flex items-center gap-2 rounded-full border border-subtle px-4 py-2 text-sm hover:border-accent/60 bg-white">
                 <Github className="w-4 h-4" /> GitHub
               </a>
-              <a href={PROFILE.links.linkedin} target="_blank" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm hover:border-accent/60">
+              <a href={PROFILE.links.linkedin} target="_blank" className="inline-flex items-center gap-2 rounded-full border border-subtle px-4 py-2 text-sm hover:border-accent/60 bg-white">
                 <Linkedin className="w-4 h-4" /> LinkedIn
               </a>
             </div>
           </motion.div>
 
-          {/* Colonne droite : carte profil (remplie l’espace) */}
+          {/* Colonne droite */}
           <motion.aside
-            className="lg:col-span-5 rounded-3xl border border-white/10 bg-white/60 dark:bg-white/5 p-6"
+            className="lg:col-span-5 rounded-3xl border border-subtle bg-white p-6"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
           >
             <div className="text-sm opacity-80 mb-3">About me</div>
             <ul className="space-y-2 text-sm">
               <li><span className="opacity-70">Name :</span> <span className="font-medium">{PROFILE.name}</span></li>
-              <li><span className="opacity-70">Statut :</span> <span className="font-medium">{PROFILE.title}</span></li>
+              <li><span className="opacity-70">Status :</span> <span className="font-medium">{PROFILE.title}</span></li>
               <li><span className="opacity-70">Mail :</span> <a className="underline" href={`mailto:${PROFILE.links.email}`}>{PROFILE.links.email}</a></li>
             </ul>
           </motion.aside>
         </div>
 
-        {/* PROJETS – LARGE & ALIGNÉ GAUCHE */}
+        {/* PROJETS */}
         <Section id="projects" icon={Code2} title="Projets" className="mt-14">
-          <div className="rounded-2xl border border-white/10 p-4 mb-6 bg-white/60 dark:bg-white/5">
+          <div className="rounded-2xl border border-subtle p-4 mb-6 bg-white">
             <div className="flex items-center gap-2 mb-2">
               <Filter className="w-4 h-4 text-accent" />
               <h3 className="text-sm font-semibold">Filtrer</h3>
@@ -185,7 +186,7 @@ export default function App() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Rechercher titre, techno…"
-              className="w-full rounded-xl border border-white/10 bg-transparent px-3 py-2 text-sm"
+              className="w-full rounded-xl border border-subtle bg-transparent px-3 py-2 text-sm"
             />
             <div className="mt-3 flex flex-wrap gap-2">
               {types.map((t) => (
@@ -193,7 +194,7 @@ export default function App() {
                   key={t}
                   onClick={() => setType(t)}
                   className={`rounded-full border px-3 py-1.5 text-xs transition ${
-                    type === t ? "border-accent bg-accent text-white" : "border-white/15 hover:border-accent/60"
+                    type === t ? "border-accent bg-accent text-white" : "border-subtle hover:border-accent/60 bg-white"
                   }`}
                 >
                   {t}
@@ -210,7 +211,7 @@ export default function App() {
 
         {/* CONTACT */}
         <Section id="contact" icon={Mail} title="Contact" className="mt-14">
-          <div className="rounded-2xl border border-white/10 p-5 bg-white/60 dark:bg-white/5">
+          <div className="rounded-2xl border border-subtle p-5 bg-white dark:bg-white/5">
             <p className="text-sm opacity-90">
               Contact me :{" "}
               <a className="underline decoration-accent underline-offset-4" href={`mailto:${PROFILE.links.email}`}>
