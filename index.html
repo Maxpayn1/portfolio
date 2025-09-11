@@ -6,13 +6,12 @@
     <title>Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-  // Activer le dark mode par classe
   tailwind.config = { darkMode: 'class' };
 
-  // Mettre la classe dark sur <html> selon sauvegarde ou préférence système
+  // Theme initial : sauvegarde > préférence système > light
   const saved = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if ((saved && saved === 'dark') || (!saved && prefersDark)) {
+  if (saved === 'dark' || (!saved && prefersDark)) {
     document.documentElement.classList.add('dark');
   }
 </script>
