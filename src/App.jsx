@@ -8,7 +8,7 @@ const PROFILE = {
   title: "Passionate student",
   bio: "Undergraduate student at MOMA.",
   links: {
-    github: "https://github.com/paoloquetel",
+    github: "https://github.com/paoloquetel303005-ui/portfolio",
     linkedin: "https://www.linkedin.com/in/paoloquetel",
     website: "",
     email: "paolo.quetel303005@gmail.com",
