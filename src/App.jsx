@@ -4,19 +4,19 @@ import { Github, Linkedin, Mail, Globe, Filter, Moon, Sun, ExternalLink, Code2, 
 
 const PROFILE = {
   name: "Ton Nom",
-  title: "Étudiant / Développeur",
+  title: "Étudiant passioné",
   bio: "Etudiant en licence a MOMA.",
   links: {
-    github: "https://github.com/",
-    linkedin: "https://www.linkedin.com/",
+    github: "https://github.com/paoloquetel303005-ui/portfolio",
+    linkedin: "https://www.linkedin.com/in/paolo-quetel-9891a8285/",
     website: "",
-    email: "ton.email@example.com",
+    email: "paolo.quetel303005@gmail.com",
   },
 };
 
 const PROJECTS = [
-  { id: 1, title: "Projet A", type: "Scolaire", year: 2024, tech: ["Java"], description: "Résumé du projet A.", link: "#" },
-  { id: 2, title: "Projet B", type: "Professionnel", year: 2025, tech: ["Nginx"], description: "Résumé du projet B.", link: "#" },
+  { id: 1, title: "Assets dévelopment", type: "Professionnel", year: 2024, tech: ["Java"], description: "the desire to succeed in creating graphic assets for lightzino.", link: "#" },
+  { id: 2, title: "Portfolio", type: "Scolaire", year: 2025, tech: ["Nginx"], description: "Simply the creation of my own Portfolio without skills in development.", link: "#" },
 ];
 
 function Badge({ children }) {
