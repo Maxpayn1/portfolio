@@ -1,6 +1,6 @@
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, Filter, Moon, Sun, ExternalLink, Code2, Star } from "lucide-react";
+import { Github, Linkedin, Mail, Moon, Sun, ExternalLink, Code2, Star } from "lucide-react";
 
 /* ====== DATA ====== */
 const PROFILE = {
@@ -84,23 +84,6 @@ export default function App() {
     localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
 
-  // Filtres
-  const [query, setQuery] = useState("");
-  const [type, setType] = useState("Tous");
-  const types = ["Tous", "Scolaire", "Professionnel", "Perso"];
-  const filtered = useMemo(
-    () =>
-      PROJECTS.filter(
-        (p) =>
-          (type === "Tous" || p.type === type) &&
-          (!query ||
-            (p.title + " " + p.description + " " + p.tech.join(" "))
-              .toLowerCase()
-              .includes(query.toLowerCase()))
-      ),
-    [query, type]
-  );
-
   return (
     <div
       className={`
@@ -177,40 +160,10 @@ export default function App() {
           </motion.aside>
         </div>
 
-        {/* PROJETS */}
+        {/* PROJETS (sans filtrer) */}
         <Section id="projects" icon={Code2} title="Projets" className="mt-14">
-          <div className="rounded-2xl border border-subtle p-4 mb-6 bg-white dark:bg-white/5">
-            <div className="flex items-center gap-2 mb-2">
-              <Filter className="w-4 h-4 text-accent" />
-              <h3 className="text-sm font-semibold">Filtrer</h3>
-            </div>
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher titre, techno…"
-              className="w-full rounded-xl border border-subtle bg-transparent px-3 py-2 text-sm"
-            />
-            <div className="mt-3 flex flex-wrap gap-2">
-              {["Tous", "Scolaire", "Professionnel", "Perso"].map((t) => (
-                <button
-                  key={t}
-                  onClick={() => setType(t)}
-                  className={`rounded-full border px-3 py-1.5 text-xs transition ${
-                    type === t
-                      ? "border-accent bg-accent text-white"
-                      : "border-subtle hover:border-accent/60 bg-white dark:bg-transparent"
-                  }`}
-                >
-                  {t}
-                </button>
-              ))}
-            </div>
-          </div>
-
           <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-            {filtered.map((p) => <ProjectCard key={p.id} p={p} />)}
-            {filtered.length === 0 && <p className="opacity-70 text-sm">Aucun projet ne correspond à ta recherche.</p>}
+            {PROJECTS.map((p) => <ProjectCard key={p.id} p={p} />)}
           </div>
         </Section>
 
