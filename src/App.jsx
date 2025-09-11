@@ -2,6 +2,7 @@ import { useMemo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Filter, Moon, Sun, ExternalLink, Code2, Star } from "lucide-react";
 
+/* ====== DATA ====== */
 const PROFILE = {
   name: "Paolo Quetel",
   title: "Passionate student",
@@ -15,33 +16,16 @@ const PROFILE = {
 };
 
 const PROJECTS = [
-  {
-    id: 1,
-    title: "Assets développement",
-    type: "Professionnel",
-    year: 2024,
-    tech: ["Java"],
-    description: "The desire to succeed in creating graphic assets for lightzino.",
-    link: "#",
-  },
-  {
-    id: 2,
-    title: "Portfolio",
-    type: "Scolaire",
-    year: 2025,
-    tech: ["Nginx"],
-    description: "Simply the creation of my own Portfolio without skills in development.",
-    link: "https://portfoliomaxpayne.vercel.app/",
-  },
+  { id: 1, title: "Assets développement", type: "Professionnel", year: 2024, tech: ["Java"], description: "The desire to succeed in creating graphic assets for lightzino.", link: "#" },
+  { id: 2, title: "Portfolio", type: "Scolaire", year: 2025, tech: ["Nginx"], description: "Simply the creation of my own Portfolio without skills in development.", link: "https://portfoliomaxpayne.vercel.app/" },
 ];
 
-function Pill({ children }) {
-  return (
-    <span className="inline-flex items-center rounded-full border border-subtle/50 px-2.5 py-1 text-xs font-medium">
-      {children}
-    </span>
-  );
-}
+/* ====== UI ====== */
+const Pill = ({ children }) => (
+  <span className="inline-flex items-center rounded-full border border-white/10 px-2.5 py-1 text-xs font-medium">
+    {children}
+  </span>
+);
 
 function Section({ id, icon: Icon, title, children, className = "" }) {
   return (
@@ -61,7 +45,7 @@ function ProjectCard({ p }) {
       href={p.link}
       target="_blank"
       rel="noreferrer"
-      className="group block rounded-2xl border border-subtle/50 bg-white/60 dark:bg-white/5 backdrop-blur-sm p-5 hover:border-accent/50 hover:shadow-[0_10px_30px_-12px_rgba(139,92,246,0.45)] transition"
+      className="group block rounded-2xl border border-white/10 bg-white/60 dark:bg-white/5 backdrop-blur-sm p-5 hover:border-accent/50 hover:shadow-[0_10px_30px_-12px_rgba(139,92,246,0.45)] transition"
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -87,8 +71,9 @@ function ProjectCard({ p }) {
   );
 }
 
+/* ====== APP ====== */
 export default function App() {
-  // THEME (light par défaut + persistance)
+  // Theme (light par défaut + persistance)
   const [dark, setDark] = useState(() => {
     const saved = localStorage.getItem("theme");
     if (saved) return saved === "dark";
@@ -99,66 +84,98 @@ export default function App() {
     localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
 
-  // FILTRES
+  // Filtres
   const [query, setQuery] = useState("");
   const [type, setType] = useState("Tous");
   const types = ["Tous", "Scolaire", "Professionnel", "Perso"];
-  const filtered = useMemo(() =>
-    PROJECTS.filter(p =>
-      (type === "Tous" || p.type === type) &&
-      (!query || (p.title + " " + p.description + " " + p.tech.join(" "))
-        .toLowerCase().includes(query.toLowerCase()))
-    ), [query, type]);
+  const filtered = useMemo(
+    () =>
+      PROJECTS.filter(
+        (p) =>
+          (type === "Tous" || p.type === type) &&
+          (!query ||
+            (p.title + " " + p.description + " " + p.tech.join(" "))
+              .toLowerCase()
+              .includes(query.toLowerCase()))
+      ),
+    [query, type]
+  );
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(139,92,246,0.25),transparent),linear-gradient(#ffffff,#ffffff)] dark:bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(139,92,246,0.15),transparent),linear-gradient(#0a0a0a,#0a0a0a)] text-neutral-900 dark:text-neutral-100">
+    <div className="min-h-screen text-neutral-900 dark:text-neutral-100
+      bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(139,92,246,0.25),transparent),linear-gradient(#ffffff,#ffffff)]
+      dark:bg-[radial-gradient(80%_60%_at_50%_-10%,rgba(139,92,246,0.15),transparent),linear-gradient(#0a0a0a,#0a0a0a)]">
+      
       {/* NAV */}
-      <header className="sticky top-0 z-20 border-b border-subtle/50 bg-white/70 dark:bg-black/50 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-black/40">
-        <div className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
+      <header className="sticky top-0 z-20 border-b border-white/10 bg-white/75 dark:bg-black/50 backdrop-blur">
+        <div className="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between">
           <a href="#home" className="font-semibold tracking-tight">{PROFILE.name}</a>
-          <nav className="hidden sm:flex items-center gap-6 text-sm">
+          <nav className="hidden md:flex items-center gap-6 text-sm">
             <a href="#projects" className="opacity-80 hover:opacity-100">Projets</a>
             <a href="#contact" className="opacity-80 hover:opacity-100">Contact</a>
           </nav>
           <button
-            onClick={() => setDark(d => !d)}
-            className="inline-flex items-center gap-2 rounded-full border border-subtle/60 px-3 py-1.5 text-sm hover:border-accent/60"
+            onClick={() => setDark((d) => !d)}
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-sm hover:border-accent/60"
             aria-label="Basculer le thème"
           >
-            {dark ? <Sun className="w-4 h-4"/> : <Moon className="w-4 h-4" />} Thème
+            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />} Thème
           </button>
         </div>
       </header>
 
-      {/* HERO */}
-      <main id="home" className="mx-auto max-w-5xl px-4 py-10 md:py-14">
-        <motion.div initial={{opacity:0, y:14}} animate={{opacity:1, y:0}}>
-          <div className="inline-flex items-center gap-2 rounded-full border border-subtle/50 px-3 py-1 text-xs mb-4 bg-white/60 dark:bg-white/5">
-            <Star className="w-3 h-3 text-accent" /> Portfolio
-          </div>
-          <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-fuchsia-500">
-              {PROFILE.title}
-            </span>
-          </h1>
-          <p className="mt-3 text-base opacity-90">{PROFILE.bio}</p>
+      {/* CONTAINER LARGE */}
+      <main id="home" className="mx-auto max-w-6xl px-6 py-10 md:py-14">
+        {/* HERO EN 2 COLONNES */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          {/* Colonne gauche : contenu */}
+          <motion.div
+            className="lg:col-span-7"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-xs mb-4 bg-white/60 dark:bg-white/5">
+              <Star className="w-3 h-3 text-accent" /> Portfolio
+            </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <a href={`mailto:${PROFILE.links.email}`} className="inline-flex items-center gap-2 rounded-full border border-subtle/60 px-4 py-2 text-sm hover:border-accent/60">
-              <Mail className="w-4 h-4" /> Me contacter
-            </a>
-            <a href={PROFILE.links.github} target="_blank" className="inline-flex items-center gap-2 rounded-full border border-subtle/60 px-4 py-2 text-sm hover:border-accent/60">
-              <Github className="w-4 h-4" /> GitHub
-            </a>
-            <a href={PROFILE.links.linkedin} target="_blank" className="inline-flex items-center gap-2 rounded-full border border-subtle/60 px-4 py-2 text-sm hover:border-accent/60">
-              <Linkedin className="w-4 h-4" /> LinkedIn
-            </a>
-          </div>
-        </motion.div>
+            <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-fuchsia-500">
+                {PROFILE.title}
+              </span>
+            </h1>
+            <p className="mt-3 text-base opacity-90 max-w-prose">{PROFILE.bio}</p>
 
-        {/* PROJETS */}
-        <Section id="projects" icon={Code2} title="Projets" className="mt-12">
-          <div className="rounded-2xl border border-subtle/50 p-4 mb-5 bg-white/60 dark:bg-white/5">
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a href={`mailto:${PROFILE.links.email}`} className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm hover:border-accent/60">
+                <Mail className="w-4 h-4" /> Me contacter
+              </a>
+              <a href={PROFILE.links.github} target="_blank" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm hover:border-accent/60">
+                <Github className="w-4 h-4" /> GitHub
+              </a>
+              <a href={PROFILE.links.linkedin} target="_blank" className="inline-flex items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-sm hover:border-accent/60">
+                <Linkedin className="w-4 h-4" /> LinkedIn
+              </a>
+            </div>
+          </motion.div>
+
+          {/* Colonne droite : carte profil (remplie l’espace) */}
+          <motion.aside
+            className="lg:col-span-5 rounded-3xl border border-white/10 bg-white/60 dark:bg-white/5 p-6"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="text-sm opacity-80 mb-3">À propos</div>
+            <ul className="space-y-2 text-sm">
+              <li><span className="opacity-70">Nom :</span> <span className="font-medium">{PROFILE.name}</span></li>
+              <li><span className="opacity-70">Titre :</span> <span className="font-medium">{PROFILE.title}</span></li>
+              <li><span className="opacity-70">Email :</span> <a className="underline" href={`mailto:${PROFILE.links.email}`}>{PROFILE.links.email}</a></li>
+            </ul>
+          </motion.aside>
+        </div>
+
+        {/* PROJETS – LARGE & ALIGNÉ GAUCHE */}
+        <Section id="projects" icon={Code2} title="Projets" className="mt-14">
+          <div className="rounded-2xl border border-white/10 p-4 mb-6 bg-white/60 dark:bg-white/5">
             <div className="flex items-center gap-2 mb-2">
               <Filter className="w-4 h-4 text-accent" />
               <h3 className="text-sm font-semibold">Filtrer</h3>
@@ -168,7 +185,7 @@ export default function App() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Rechercher titre, techno…"
-              className="w-full rounded-xl border border-subtle/50 bg-transparent px-3 py-2 text-sm"
+              className="w-full rounded-xl border border-white/10 bg-transparent px-3 py-2 text-sm"
             />
             <div className="mt-3 flex flex-wrap gap-2">
               {types.map((t) => (
@@ -176,9 +193,7 @@ export default function App() {
                   key={t}
                   onClick={() => setType(t)}
                   className={`rounded-full border px-3 py-1.5 text-xs transition ${
-                    type === t
-                      ? "border-accent bg-accent text-white"
-                      : "border-subtle/50 hover:border-accent/60"
+                    type === t ? "border-accent bg-accent text-white" : "border-white/15 hover:border-accent/60"
                   }`}
                 >
                   {t}
@@ -187,17 +202,15 @@ export default function App() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+          <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {filtered.map((p) => <ProjectCard key={p.id} p={p} />)}
-            {filtered.length === 0 && (
-              <p className="opacity-70 text-sm">Aucun projet ne correspond à ta recherche.</p>
-            )}
+            {filtered.length === 0 && <p className="opacity-70 text-sm">Aucun projet ne correspond à ta recherche.</p>}
           </div>
         </Section>
 
         {/* CONTACT */}
-        <Section id="contact" icon={Mail} title="Contact" className="mt-12">
-          <div className="rounded-2xl border border-subtle/50 p-5 bg-white/60 dark:bg-white/5">
+        <Section id="contact" icon={Mail} title="Contact" className="mt-14">
+          <div className="rounded-2xl border border-white/10 p-5 bg-white/60 dark:bg-white/5">
             <p className="text-sm opacity-90">
               Contact me :{" "}
               <a className="underline decoration-accent underline-offset-4" href={`mailto:${PROFILE.links.email}`}>
@@ -207,7 +220,7 @@ export default function App() {
           </div>
         </Section>
 
-        <footer className="py-10 text-xs opacity-70 text-center">
+        <footer className="py-10 text-xs opacity-70">
           © {new Date().getFullYear()} {PROFILE.name}. Built with React + Tailwind.
         </footer>
       </main>
