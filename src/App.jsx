@@ -164,11 +164,11 @@ export default function App() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="text-sm opacity-80 mb-3">À propos</div>
+            <div className="text-sm opacity-80 mb-3">About me</div>
             <ul className="space-y-2 text-sm">
-              <li><span className="opacity-70">Nom :</span> <span className="font-medium">{PROFILE.name}</span></li>
-              <li><span className="opacity-70">Titre :</span> <span className="font-medium">{PROFILE.title}</span></li>
-              <li><span className="opacity-70">Email :</span> <a className="underline" href={`mailto:${PROFILE.links.email}`}>{PROFILE.links.email}</a></li>
+              <li><span className="opacity-70">Name :</span> <span className="font-medium">{PROFILE.name}</span></li>
+              <li><span className="opacity-70">Statut :</span> <span className="font-medium">{PROFILE.title}</span></li>
+              <li><span className="opacity-70">Mail :</span> <a className="underline" href={`mailto:${PROFILE.links.email}`}>{PROFILE.links.email}</a></li>
             </ul>
           </motion.aside>
         </div>
