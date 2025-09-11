@@ -1,3 +1,4 @@
+import { useMemo, useState, useEffect } from "react";
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Globe, Filter, Moon, Sun, ExternalLink, Code2, GraduationCap, Briefcase, Star } from "lucide-react";
@@ -67,19 +68,20 @@ function ProjectCard({ p }) {
 }
 
 export default function PortfolioApp() {
-  const [dark, setDark] = useState(true);
-  const [query, setQuery] = useState("");
-  const [type, setType] = useState("Tous");
-  const types = ["Tous", "Scolaire", "Professionnel", "Perso"];
+  // init: localStorage > préférence système
+  const [dark, setDark] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved) return saved === 'dark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
 
-  const filtered = useMemo(() => {
-    return PROJECTS.filter((p) =>
-      (type === "Tous" || p.type === type) &&
-      (!query || (p.title + " " + p.description + " " + p.tech.join(" ")).toLowerCase().includes(query.toLowerCase()))
-    );
-  }, [query, type]);
+  // applique la classe sur <html> + sauvegarde
+  useEffect(() => {
+    const root = document.documentElement;
+    dark ? root.classList.add('dark') : root.classList.remove('dark');
+    localStorage.setItem('theme', dark ? 'dark' : 'light');
+  }, [dark]);
 
-  return (
     <div className={dark ? "dark" : ""}>
       <div className="min-h-screen bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100 transition-colors">
         
@@ -91,9 +93,12 @@ export default function PortfolioApp() {
               <a href="#projects" className="opacity-80 hover:opacity-100">Projets</a>
               <a href="#contact" className="opacity-80 hover:opacity-100">Contact</a>
             </nav>
-            <button onClick={() => setDark(d => !d)} className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm">
-              {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />} Thème
-            </button>
+            <button
+  onClick={() => setDark(d => !d)}
+  className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm"
+>
+  {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />} Thème
+</button>
           </div>
         </header>
 
