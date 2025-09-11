@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, Globe, Filter, Moon, Sun, ExternalLink, Code2, GraduationCap, Briefcase, Star } from "lucide-react";
 
 const PROFILE = {
-  name: "Ton Nom",
-  title: "Étudiant passioné",
-  bio: "Etudiant en licence a MOMA.",
+  name: "Paolo Quetel",
+  title: "Passionate student",
+  bio: "Undergraduate student at MOMA.",
   links: {
     github: "https://github.com/paoloquetel303005-ui/portfolio",
     linkedin: "https://www.linkedin.com/in/paolo-quetel-9891a8285/",
@@ -140,7 +140,7 @@ export default function PortfolioApp() {
           <Section id="contact" icon={Mail} title="Contact">
             <div className="rounded-2xl border p-4">
               <p className="text-sm opacity-90">
-                Contacte-moi : <a className="underline" href={`mailto:${PROFILE.links.email}`}>{PROFILE.links.email}</a>
+                Contact me : <a className="underline" href={`mailto:${PROFILE.links.email}`}>{PROFILE.links.email}</a>
               </p>
             </div>
           </Section>
