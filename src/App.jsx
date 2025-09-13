@@ -4,9 +4,8 @@ import {
   Github, Linkedin, Mail, Moon, Sun, ExternalLink, Code2, Star, ArrowUp
 } from "lucide-react";
 
-/* ====== CONFIG LOGO (depuis /public) ====== */
+/* ====== CONFIG ====== */
 const LOGO_PATH = `${import.meta.env.BASE_URL}maxpayn-logo.png.png`;
- // /public/maxpayn-logo.png
 const PSEUDO = "Maxpayn";
 
 /* ====== DATA ====== */
@@ -14,7 +13,7 @@ const PROFILE = {
   name: "Maxpayn",
   title: "Passionate student",
   bioLong:
-    "I'm Paolo Quetel, a design-minded student focused on creating clean visuals and performant UIs. I enjoy bridging design and code — from crafting assets to shipping small, polished web experiences. Im lover of sport (practice a lot football and gym) and of nature (like hiking or trekking)",
+    "I'm Paolo Quetel, a design-minded student focused on creating clean visuals and performant UIs. I enjoy bridging design and code — from crafting assets to shipping small, polished web experiences. Im lover of sport (practice a lot football and gym) and of nature (like hiking or trekking). I love to learn and fight new challenges. I got a real will to learn and push me to get better in every aspects of life.",
   links: {
     github: "https://github.com/paoloquetel",
     linkedin: "https://www.linkedin.com/in/paoloquetel",
@@ -29,52 +28,89 @@ const PROJECTS = [
 ];
 
 const SKILLS = [
-  { t: "Java", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", c: "from-amber-400 to-orange-500" },
-  { t: "Nginx", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg", c: "from-emerald-400 to-teal-500" },
-  { t: "UI/UX", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", c: "from-pink-400 to-fuchsia-500" },
-  { t: "Figma", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", c: "from-purple-400 to-violet-500" },
-  { t: "TailwindCSS", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg", c: "from-sky-400 to-cyan-500" },
-  { t: "Framer Motion", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", c: "from-indigo-400 to-violet-500" },
-  { t: "Git", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", c: "from-rose-400 to-red-500" },
-  { t: "Linux", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg", c: "from-lime-400 to-emerald-500" },
+  { t: "Java", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+  { t: "Nginx", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg" },
+  { t: "UI/UX", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+  { t: "Figma", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+  { t: "TailwindCSS", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
+  { t: "Framer Motion", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+  { t: "Git", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+  { t: "Linux", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" },
 ];
 
 const EXPERIENCES = [
-  { year: "2025", title: "Portfolio v1", desc: "Design + déploiement (Vercel), dark/light, animations.", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg", c: "from-slate-200 to-slate-400" },
-  { year: "2024", title: "Assets graphique — Lightzino", desc: "Création d’assets & déclinaisons visuelles.", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", c: "from-pink-400 to-fuchsia-500" },
-  { year: "2023", title: "MOMA — Undergraduate", desc: "Parcours étudiant, bases dev & design.", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg", c: "from-sky-400 to-cyan-500" },
+  { year: "2025", title: "Portfolio v1", desc: "Design + déploiement (Vercel), dark/light, animations.", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" },
+  { year: "2024", title: "Assets graphique — Lightzino", desc: "Création d’assets & déclinaisons visuelles.", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+  { year: "2023", title: "MOMA — Undergraduate", desc: "Parcours étudiant, bases dev & design.", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg" },
 ];
 
 /* ====== HELPERS ====== */
 const ease = [0.22, 1, 0.36, 1];
-const fadeUp = {
-  initial: { opacity: 0, y: 36 },
-  whileInView: { opacity: 1, y: 0, transition: { duration: 0.6, ease } },
-  viewport: { once: true, amount: 0.3 },
+
+/* ====== SCROLL REVEALS ====== */
+const reveal = {
+  up:    { initial: { opacity: 0, y: 32 },  whileInView: { opacity: 1, y: 0 } },
+  down:  { initial: { opacity: 0, y: -32 }, whileInView: { opacity: 1, y: 0 } },
+  left:  { initial: { opacity: 0, x: -32 }, whileInView: { opacity: 1, x: 0 } },
+  right: { initial: { opacity: 0, x: 32 },  whileInView: { opacity: 1, x: 0 } },
 };
 
-/* ====== FX BACKGROUND ====== */
+function Reveal({ children, dir = "up", delay = 0, duration = 0.6 }) {
+  const v = reveal[dir] ?? reveal.up;
+  return (
+    <motion.div
+      initial={v.initial}
+      whileInView={{ ...v.whileInView, transition: { duration, ease, delay } }}
+      viewport={{ once: true, amount: 0.25 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const staggerContainer = {
+  initial: {},
+  whileInView: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+};
+const item = {
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0, transition: { duration: 0.45, ease } },
+};
+
+/* ====== BACKGROUND FX ====== */
 function BackgroundFX() {
   return (
     <>
-      <div className="pointer-events-none fixed -top-24 -left-24 h-[42rem] w-[42rem] rounded-full bg-gradient-to-br from-fuchsia-500/25 via-violet-500/20 to-sky-500/10 blur-3xl" />
-      <div className="pointer-events-none fixed -bottom-24 -right-24 h-[40rem] w-[40rem] rounded-full bg-gradient-to-tr from-sky-500/25 via-cyan-400/15 to-fuchsia-500/10 blur-3xl" />
-      <div className="pointer-events-none fixed inset-0 opacity-[0.06] mix-blend-soft-light [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:14px_14px]" />
+      {/* halos adaptés aux deux thèmes */}
+      <div className="pointer-events-none fixed -top-24 -left-24 h-[42rem] w-[42rem] rounded-full blur-3xl
+                      bg-gradient-to-br from-fuchsia-500/25 via-violet-500/20 to-sky-500/10
+                      dark:from-fuchsia-500/25 dark:via-violet-500/20 dark:to-sky-500/10" />
+      <div className="pointer-events-none fixed -bottom-40 -right-24 h-[56rem] w-[56rem] rounded-full blur-3xl
+                      bg-gradient-to-tr from-sky-500/15 via-cyan-400/10 to-emerald-500/10
+                      dark:from-sky-500/25 dark:via-cyan-400/15 dark:to-emerald-500/10" />
+      {/* grille de points : sombre en light, claire en dark */}
+      <div className="pointer-events-none fixed inset-0 opacity-[0.06] mix-blend-soft-light
+                      [background-image:radial-gradient(#000_1px,transparent_1px)]
+                      dark:[background-image:radial-gradient(#fff_1px,transparent_1px)]
+                      [background-size:14px_14px]" />
     </>
   );
 }
 
 /* ====== SMALL COMPONENTS ====== */
 const Pill = ({ children }) => (
-  <span className="inline-flex items-center rounded-full border border-white/15 px-2.5 py-1 text-xs font-medium bg-white/5 backdrop-blur">
+  <span className="inline-flex items-center rounded-full 
+                   border border-black/15 dark:border-white/15 
+                   px-2.5 py-1 text-xs font-medium 
+                   bg-black/5 dark:bg-white/5 backdrop-blur">
     {children}
   </span>
 );
 
 function SectionTitle({ children }) {
   return (
-    <h2 className="text-2xl font-semibold mb-6 inline-block">
-      <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 to-sky-400">
+    <h2 className="text-2xl md:text-3xl font-semibold mb-6 inline-block">
+      <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-sky-500">
         {children}
       </span>
       <span className="block h-[2px] w-24 mt-2 bg-gradient-to-r from-fuchsia-500 to-sky-400 rounded-full" />
@@ -86,38 +122,65 @@ function SnapSection({ id, children, className = "" }) {
   return (
     <section id={id} className={`snap-start scroll-mt-20 min-h-[100svh] flex items-center ${className}`}>
       <div className="mx-auto max-w-6xl w-full px-6">
-        <div className="h-px w-full mb-10 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+        <div className="h-px w-full mb-10 bg-gradient-to-r from-transparent via-black/10 to-transparent dark:via-white/15" />
         {children}
       </div>
     </section>
   );
 }
 
-/* ====== BADGES ====== */
-function SkillBadge({ t, url, c }) {
+/* ====== SKILL TILE ====== */
+function SkillTile({ t, url }) {
   return (
-    <div className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur px-3 py-2.5 flex items-center gap-3 hover:-translate-y-0.5 transition">
-      <span className={`absolute inset-0 -z-10 rounded-2xl bg-gradient-to-r ${c} opacity-15`} />
-      <img src={url} alt={t} className="w-6 h-6 object-contain opacity-90" />
-      <span className="text-sm font-medium">{t}</span>
+    <div className="group relative rounded-2xl p-[2px] bg-gradient-to-br from-fuchsia-500/50 via-sky-500/40 to-emerald-500/50">
+      <div className="rounded-2xl border border-black/10 dark:border-white/10
+                      bg-white/70 dark:bg-zinc-950/70 backdrop-blur 
+                      aspect-square w-full grid place-items-center gap-3">
+        <span className="relative p-[2px] rounded-xl bg-gradient-to-br from-fuchsia-500 via-sky-500 to-emerald-500">
+          <span className="grid place-items-center w-16 h-16 md:w-20 md:h-20 rounded-[12px]
+                           bg-white/80 dark:bg-zinc-900/80
+                           ring-1 ring-black/10 dark:ring-white/10">
+            <img src={url} alt={t} className="w-9 h-9 md:w-12 md:h-12 object-contain" />
+          </span>
+        </span>
+        <div className="text-base md:text-lg font-semibold tracking-tight">{t}</div>
+      </div>
+      <span className="pointer-events-none absolute inset-0 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition bg-cyan-400/10" />
     </div>
   );
 }
 
-function ExperienceItem({ title, desc, year, url, c }) {
+/* ====== EXPERIENCE TILE ====== */
+function ExperienceTile({ title, desc, year, url }) {
   return (
-    <div className="group relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-4 md:p-5">
-      <span className={`absolute inset-0 -z-10 rounded-2xl bg-gradient-to-r ${c} opacity-10`} />
-      <div className="flex items-start justify-between gap-4">
+    <div className="group relative rounded-2xl p-[2px] bg-gradient-to-br from-fuchsia-500/50 via-sky-500/40 to-emerald-500/50">
+      <div className="rounded-2xl border border-black/10 dark:border-white/10
+                      bg-white/70 dark:bg-zinc-950/70 backdrop-blur 
+                      p-5 md:p-6 h-full grid grid-rows-[auto_1fr_auto] gap-4">
         <div className="flex items-center gap-3">
-          <img src={url} alt={title} className="w-8 h-8 object-contain opacity-90" />
-          <div>
-            <div className="text-sm font-semibold">{title}</div>
-            <p className="text-xs opacity-85 mt-0.5">{desc}</p>
-          </div>
+          <span className="relative p-[2px] rounded-xl bg-gradient-to-br from-fuchsia-500 via-sky-500 to-emerald-500">
+            <span className="grid place-items-center w-12 h-12 md:w-14 md:h-14 rounded-[10px]
+                             bg-white/80 dark:bg-zinc-900/80
+                             ring-1 ring-black/10 dark:ring-white/10">
+              <img src={url} alt={title} className="w-7 h-7 md:w-8 md:h-8 object-contain" />
+            </span>
+          </span>
+          <div className="font-semibold leading-tight">{title}</div>
         </div>
-        <Pill>{year}</Pill>
+
+        <p className="text-sm md:text-[15px] opacity-90">{desc}</p>
+
+        <div className="flex items-center justify-between">
+          <span className="text-xs opacity-70">Experience</span>
+          <span className="inline-flex items-center rounded-full 
+                           border border-black/15 dark:border-white/15 
+                           px-2.5 py-1 text-xs 
+                           bg-black/5 dark:bg-white/5 backdrop-blur">
+            {year}
+          </span>
+        </div>
       </div>
+      <span className="pointer-events-none absolute inset-0 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition bg-cyan-400/10" />
     </div>
   );
 }
@@ -134,10 +197,11 @@ function ProjectCard({ p }) {
       viewport={{ once: true, amount: 0.2 }}
       whileHover={{ y: -4 }}
     >
-      <div className="rounded-2xl border border-white/10 bg-zinc-900/60 backdrop-blur p-5">
+      <div className="rounded-2xl border border-black/10 dark:border-white/10 
+                      bg-white/70 dark:bg-zinc-900/60 backdrop-blur p-5">
         <div className="flex items-start justify-between gap-3">
           <h3 className="text-base font-semibold flex items-center gap-2">
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-accent/15">
+            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-black/5 dark:bg-accent/15">
               <Code2 className="w-4 h-4 text-accent" />
             </span>
             <span>{p.title}</span>
@@ -157,35 +221,35 @@ function ProjectCard({ p }) {
   );
 }
 
-/* ====== BRAND BADGE (gros logo + pseudo vert) ====== */
+/* ====== BRAND BADGE (fixe, plus haut) ====== */
 function BrandBadge() {
   return (
-    <div className="hidden lg:flex fixed left-10 top-1/2 -translate-y-1/2 z-30">
+    <div className="hidden lg:flex fixed left-10 top-[30%] z-30">
       <div className="flex flex-col items-center">
-        <div className="relative p-[4px] rounded-[28px]
-                        bg-gradient-to-br from-fuchsia-500/70 via-violet-500/40 to-sky-500/60
+        <div className="relative p-[4px] rounded-[28px] 
+                        bg-gradient-to-br from-fuchsia-500/70 via-violet-500/40 to-sky-500/60 
                         shadow-[0_25px_80px_-20px_rgba(147,51,234,0.55)]">
-          <div className="rounded-[24px] border border-white/15 bg-white/5 backdrop-blur p-6">
-            {/* on affiche l'image en background-image => visible à coup sûr */}
+          <div className="rounded-[24px] border border-black/15 dark:border-white/15 
+                          bg-white/60 dark:bg-white/5 backdrop-blur p-6">
             <div
-              className="w-56 h-56 rounded-2xl ring-1 ring-white/10
-                         shadow-[0_12px_40px_-16px_rgba(34,197,94,0.55)]
+              className="w-56 h-56 rounded-2xl 
+                         ring-1 ring-black/10 dark:ring-white/10
+                         shadow-[0_12px_40px_-16px_rgba(34,197,94,0.35)]
+                         dark:shadow-[0_12px_40px_-16px_rgba(34,197,94,0.55)]
                          bg-center bg-no-repeat bg-contain"
               style={{ backgroundImage: `url("${LOGO_PATH}")` }}
               aria-label="Maxpayn logo"
             />
           </div>
         </div>
-
-        <div className="mt-4 text-2xl font-extrabold tracking-wide drop-shadow
-                        bg-gradient-to-r from-emerald-400 to-lime-500 bg-clip-text text-transparent">
-          Maxpayn
+        <div className="mt-4 text-2xl font-extrabold tracking-wide drop-shadow 
+                        bg-gradient-to-r from-emerald-500 to-lime-500 bg-clip-text text-transparent">
+          {PSEUDO}
         </div>
       </div>
     </div>
   );
 }
-
 
 /* ====== APP ====== */
 export default function App() {
@@ -202,14 +266,20 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative text-neutral-900 dark:text-neutral-100 scroll-smooth bg-[#0a0a0a]">
+    <div className="relative text-neutral-900 dark:text-neutral-100 scroll-smooth 
+                    bg-white dark:bg-[#0a0a0a] text-[17px] md:text-[18px]">
       {/* NAV */}
-      <header className="fixed top-0 left-0 right-0 z-20 border-b border-white/10 bg-black/40 backdrop-blur">
+      <header className="fixed top-0 left-0 right-0 z-20 
+                         border-b border-black/10 dark:border-white/10 
+                         bg-white/60 dark:bg-black/40 backdrop-blur">
         <div className="mx-auto max-w-6xl px-6 py-3 flex items-center justify-between">
           <a href="#home" className="font-semibold tracking-tight">{PROFILE.name}</a>
           <button
             onClick={() => setDark((d) => !d)}
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-sm hover:border-fuchsia-500/60 bg-white/5 backdrop-blur"
+            className="inline-flex items-center gap-2 rounded-full 
+                       border border-black/15 dark:border-white/15 
+                       px-3 py-1.5 text-sm 
+                       bg-black/5 dark:bg-white/5 backdrop-blur"
             aria-label="Toggle theme"
           >
             {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />} Theme
@@ -221,79 +291,143 @@ export default function App() {
       <BrandBadge />
 
       <main className="snap-y snap-proximity">
-        {/* HERO */}
-        <SnapSection id="home">
-          <motion.div
-            className="max-w-3xl"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0, transition: { duration: 0.8, ease } }}
-          >
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-xs mb-5 bg-white/5 backdrop-blur">
-              <Star className="w-3 h-3 text-accent" /> Portfolio
-            </div>
-
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 to-sky-400">
-                {PROFILE.name}
-              </span>
-            </h1>
-            <p className="mt-2 text-lg opacity-90">{PROFILE.title}</p>
-
-            <div className="mt-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur px-5 py-4">
-              <p className="text-sm leading-relaxed opacity-95">{PROFILE.bioLong}</p>
-            </div>
-
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl">
-              {[{ k: "Projects", v: String(PROJECTS.length) }, { k: "Focus", v: "Design assets" }, { k: "Status", v: "Open to work" }].map((s) => (
-                <div key={s.k} className="rounded-2xl border border-white/10 px-4 py-3 flex items-center justify-between bg-gradient-to-br from-white/5 via-white/0 to-white/5 backdrop-blur">
-                  <span className="text-[11px] uppercase tracking-wide opacity-70">{s.k}</span>
-                  <span className="text-sm font-semibold">{s.v}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </SnapSection>
-
-        {/* SKILLS */}
-        <SnapSection id="skills">
-          <motion.div {...fadeUp}>
-            <SectionTitle>Skills</SectionTitle>
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6 md:p-8 min-h-[42vh]">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-                {SKILLS.map((s) => <SkillBadge key={s.t} {...s} />)}
+        {/* HERO avec reveals */}
+        <SnapSection id="home" className="pt-8">
+          <motion.div className="max-w-4xl">
+            <Reveal dir="down">
+              <div className="inline-flex items-center gap-2 rounded-full 
+                              border border-black/15 dark:border-white/15 
+                              px-3 py-1 text-xs mb-6 
+                              bg-black/5 dark:bg-white/5 backdrop-blur">
+                <Star className="w-3 h-3 text-accent" /> Portfolio
               </div>
-            </div>
+            </Reveal>
+
+            <Reveal dir="left">
+              <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-sky-500">
+                  {PROFILE.name}
+                </span>
+              </h1>
+            </Reveal>
+
+            <Reveal dir="left" delay={0.06}>
+              <p className="mt-3 text-xl md:text-2xl opacity-90">{PROFILE.title}</p>
+            </Reveal>
+
+            <Reveal dir="up" delay={0.12}>
+              <div className="mt-7 rounded-3xl 
+                              border border-black/10 dark:border-white/10 
+                              bg-black/5 dark:bg-white/5 backdrop-blur px-7 py-6">
+                <p className="text-base md:text-lg leading-relaxed opacity-95">
+                  {PROFILE.bioLong}
+                </p>
+              </div>
+            </Reveal>
+
+            <motion.div
+              className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl"
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="whileInView"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              {[{ k: "Projects", v: String(PROJECTS.length) },
+                { k: "Focus", v: "Design assets" },
+                { k: "Status", v: "Open to work" }].map((s) => (
+                <motion.div key={s.k} variants={item}
+                  className="rounded-2xl 
+                             border border-black/10 dark:border-white/10 
+                             px-6 py-5 flex items-center justify-between 
+                             bg-gradient-to-br from-black/5 via-black/0 to-black/5
+                             dark:from-white/5 dark:via-white/0 dark:to-white/5 backdrop-blur">
+                  <span className="text-[11px] uppercase tracking-wide opacity-70">{s.k}</span>
+                  <span className="text-lg font-semibold">{s.v}</span>
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
         </SnapSection>
 
-        {/* EXPERIENCE */}
+        {/* SKILLS (stagger) */}
+        <SnapSection id="skills">
+          <Reveal>
+            <SectionTitle>Skills</SectionTitle>
+            <motion.div
+              className="rounded-3xl 
+                         border border-black/10 dark:border-white/10 
+                         bg-black/5 dark:bg-white/5 backdrop-blur p-6 md:p-10 min-h-[70vh]"
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="whileInView"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <div className="grid gap-6 md:gap-7 [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]">
+                {SKILLS.map((s) => (
+                  <motion.div key={s.t} variants={item}>
+                    <SkillTile {...s} />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </Reveal>
+        </SnapSection>
+
+        {/* EXPERIENCE (tuiles + stagger) */}
         <SnapSection id="experience">
-          <motion.div {...fadeUp}>
+          <Reveal>
             <SectionTitle>Experience</SectionTitle>
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6 md:p-8 space-y-4">
-              {EXPERIENCES.map((e) => <ExperienceItem key={e.title} {...e} />)}
-            </div>
-          </motion.div>
+            <motion.div
+              className="rounded-3xl 
+                         border border-black/10 dark:border-white/10 
+                         bg-black/5 dark:bg-white/5 backdrop-blur p-6 md:p-10 min-h-[70vh]"
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="whileInView"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <div className="grid gap-6 md:gap-7 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
+                {EXPERIENCES.map((e) => (
+                  <motion.div key={e.title} variants={item}>
+                    <ExperienceTile {...e} />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </Reveal>
         </SnapSection>
 
-        {/* PROJECTS */}
+        {/* PROJECTS (stagger) */}
         <SnapSection id="projects">
-          <motion.div {...fadeUp}>
+          <Reveal>
             <SectionTitle>Projects</SectionTitle>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {PROJECTS.map((p) => <ProjectCard key={p.id} p={p} />)}
-            </div>
-          </motion.div>
+            <motion.div
+              className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
+              variants={staggerContainer}
+              initial="initial"
+              whileInView="whileInView"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              {PROJECTS.map((p) => (
+                <motion.div key={p.id} variants={item}>
+                  <ProjectCard p={p} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </Reveal>
         </SnapSection>
 
         {/* CONTACT */}
         <SnapSection id="contact">
-          <motion.div {...fadeUp} className="max-w-xl">
+          <Reveal>
             <SectionTitle>Contact</SectionTitle>
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5">
+            <div className="rounded-2xl 
+                            border border-black/10 dark:border-white/10 
+                            bg-black/5 dark:bg-white/5 backdrop-blur p-5 max-w-xl">
               <div className="space-y-3 text-sm">
-                <div><span className="opacity-80">Email:</span>{" "}
-                  <a className="underline decoration-fuchsia-400 underline-offset-4" href={`mailto:${PROFILE.links.email}`}>
+                <div>
+                  <span className="opacity-80">Email:</span>{" "}
+                  <a className="underline decoration-fuchsia-500 underline-offset-4" href={`mailto:${PROFILE.links.email}`}>
                     {PROFILE.links.email}
                   </a>
                 </div>
@@ -301,20 +435,21 @@ export default function App() {
                   <a href={`mailto:${PROFILE.links.email}`} className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm bg-gradient-to-r from-fuchsia-600 to-sky-500 text-white">
                     <Mail className="w-4 h-4" /> Mail me
                   </a>
-                  <a href={PROFILE.links.github} target="_blank" className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm bg-white/10 border border-white/20 text-white">
+                  <a href={PROFILE.links.github} target="_blank" className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm 
+                    bg-black/5 dark:bg-white/10 border border-black/15 dark:border-white/20">
                     <Github className="w-4 h-4" /> GitHub
                   </a>
-                  <a href={PROFILE.links.linkedin} target="_blank" className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm bg-white/10 border border-white/20 text-white">
+                  <a href={PROFILE.links.linkedin} target="_blank" className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm 
+                    bg-black/5 dark:bg-white/10 border border-black/15 dark:border-white/20">
                     <Linkedin className="w-4 h-4" /> LinkedIn
                   </a>
                 </div>
               </div>
             </div>
-
             <p className="text-xs opacity-70 mt-6">
               © {new Date().getFullYear()} {PROFILE.name}. Built with React + Tailwind.
             </p>
-          </motion.div>
+          </Reveal>
         </SnapSection>
       </main>
 
@@ -322,7 +457,9 @@ export default function App() {
       {showTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 rounded-full border border-white/15 bg-white/10 backdrop-blur px-3 py-3 shadow hover:border-fuchsia-500/60"
+          className="fixed bottom-6 right-6 rounded-full 
+                     border border-black/15 dark:border-white/15 
+                     bg-black/5 dark:bg-white/10 backdrop-blur px-3 py-3 shadow hover:border-fuchsia-500/60"
           aria-label="Back to top"
         >
           <ArrowUp className="w-4 h-4" />
