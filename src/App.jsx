@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 
 /* ====== CONFIG LOGO (depuis /public) ====== */
-const LOGO_PATH = `${import.meta.env.BASE_URL}maxpayn-logo.png`;
+const LOGO_PATH = `${import.meta.env.BASE_URL}maxpayn-logo.png.png`;
  // /public/maxpayn-logo.png
 const PSEUDO = "Maxpayn";
 
