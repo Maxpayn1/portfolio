@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import {
-  Github, Linkedin, Mail, Moon, Sun, ExternalLink, Code2, Star, ArrowUp
+  Github, Linkedin, Mail, Moon, Sun, ExternalLink, Code2, ArrowUp
 } from "lucide-react";
 
 /* ====== CONFIG ====== */
 const LOGO_PATH = `${import.meta.env.BASE_URL}maxpayn-logo.png.png`;
+const AVATAR_PATH = `${import.meta.env.BASE_URL}avatar.png`;
 const PSEUDO = "Maxpayn";
 
 /* ====== DATA ====== */
@@ -77,22 +78,45 @@ const item = {
   whileInView: { opacity: 1, y: 0, transition: { duration: 0.45, ease } },
 };
 
-/* ====== BACKGROUND FX ====== */
+/* ====== PARALLAX BACKGROUND ====== */
+function ParallaxLayer({ children, speed = 40, className = "" }) {
+  const { scrollY } = useScroll();
+  const reduce = useReducedMotion();
+  const y = useTransform(scrollY, [0, 1000], [0, reduce ? 0 : -speed]);
+  return (
+    <motion.div
+      aria-hidden
+      style={{ y, willChange: "transform" }}
+      className={`pointer-events-none fixed inset-0 z-0 ${className}`}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 function BackgroundFX() {
   return (
     <>
-      {/* halos adaptés aux deux thèmes */}
-      <div className="pointer-events-none fixed -top-24 -left-24 h-[42rem] w-[42rem] rounded-full blur-3xl
-                      bg-gradient-to-br from-fuchsia-500/25 via-violet-500/20 to-sky-500/10
-                      dark:from-fuchsia-500/25 dark:via-violet-500/20 dark:to-sky-500/10" />
-      <div className="pointer-events-none fixed -bottom-40 -right-24 h-[56rem] w-[56rem] rounded-full blur-3xl
-                      bg-gradient-to-tr from-sky-500/15 via-cyan-400/10 to-emerald-500/10
-                      dark:from-sky-500/25 dark:via-cyan-400/15 dark:to-emerald-500/10" />
-      {/* grille de points : sombre en light, claire en dark */}
-      <div className="pointer-events-none fixed inset-0 opacity-[0.06] mix-blend-soft-light
-                      [background-image:radial-gradient(#000_1px,transparent_1px)]
-                      dark:[background-image:radial-gradient(#fff_1px,transparent_1px)]
-                      [background-size:14px_14px]" />
+      <ParallaxLayer speed={20}>
+        <div className="absolute -top-24 -left-24 h:[42rem] w:[42rem] md:h-[42rem] md:w-[42rem] rounded-full blur-3xl
+                        bg-gradient-to-br from-fuchsia-500/25 via-violet-500/20 to-sky-500/10
+                        dark:from-fuchsia-500/25 dark:via-violet-500/20 dark:to-sky-500/10" />
+      </ParallaxLayer>
+      <ParallaxLayer speed={60}>
+        <div className="absolute -bottom-40 -right-24 h:[56rem] w:[56rem] md:h-[56rem] md:w-[56rem] rounded-full blur-3xl
+                        bg-gradient-to-tr from-sky-500/12 via-cyan-400/10 to-emerald-500/10
+                        dark:from-sky-500/25 dark:via-cyan-400/15 dark:to-emerald-500/10" />
+      </ParallaxLayer>
+      <ParallaxLayer speed={90}>
+        <div className="absolute right-[-10%] top-[10%] h-[40rem] w-[40rem] rounded-[40%] blur-2xl opacity-60
+                        bg-[radial-gradient(closest-side,rgba(59,130,246,0.12),transparent_60%)]" />
+      </ParallaxLayer>
+      <ParallaxLayer speed={-25}>
+        <div className="absolute inset-0 opacity-[0.06] mix-blend-soft-light
+                        [background-image:radial-gradient(#000_1px,transparent_1px)]
+                        dark:[background-image:radial-gradient(#fff_1px,transparent_1px)]
+                        [background-size:14px_14px]" />
+      </ParallaxLayer>
     </>
   );
 }
@@ -135,15 +159,12 @@ function SkillTile({ t, url }) {
     <div className="group relative rounded-2xl p-[2px] bg-gradient-to-br from-fuchsia-500/50 via-sky-500/40 to-emerald-500/50">
       <div className="rounded-2xl border border-black/10 dark:border-white/10
                       bg-white/70 dark:bg-zinc-950/70 backdrop-blur 
-                      aspect-square w-full grid place-items-center gap-3">
-        <span className="relative p-[2px] rounded-xl bg-gradient-to-br from-fuchsia-500 via-sky-500 to-emerald-500">
-          <span className="grid place-items-center w-16 h-16 md:w-20 md:h-20 rounded-[12px]
-                           bg-white/80 dark:bg-zinc-900/80
-                           ring-1 ring-black/10 dark:ring-white/10">
-            <img src={url} alt={t} className="w-9 h-9 md:w-12 md:h-12 object-contain" />
-          </span>
+                      p-5 grid place-items-center gap-3">
+        <span className="grid place-items-center w-16 h-16 md:w-20 md:h-20 rounded-[12px]
+                         bg-white/80 dark:bg-zinc-900/80 ring-1 ring-black/10 dark:ring-white/10">
+          <img src={url} alt={t} className="w-10 h-10 md:w-12 md:h-12 object-contain" />
         </span>
-        <div className="text-base md:text-lg font-semibold tracking-tight">{t}</div>
+        <div className="text-sm md:text-base font-semibold">{t}</div>
       </div>
       <span className="pointer-events-none absolute inset-0 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition bg-cyan-400/10" />
     </div>
@@ -167,9 +188,7 @@ function ExperienceTile({ title, desc, year, url }) {
           </span>
           <div className="font-semibold leading-tight">{title}</div>
         </div>
-
         <p className="text-sm md:text-[15px] opacity-90">{desc}</p>
-
         <div className="flex items-center justify-between">
           <span className="text-xs opacity-70">Experience</span>
           <span className="inline-flex items-center rounded-full 
@@ -187,15 +206,11 @@ function ExperienceTile({ title, desc, year, url }) {
 
 function ProjectCard({ p }) {
   return (
-    <motion.a
+    <a
       href={p.link}
       target="_blank"
       rel="noreferrer"
       className="group block rounded-2xl p-[1px] bg-gradient-to-r from-fuchsia-500/60 via-violet-500/40 to-sky-500/60 hover:shadow-[0_18px_60px_-20px_rgba(147,51,234,0.45)] transition"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5, ease } }}
-      viewport={{ once: true, amount: 0.2 }}
-      whileHover={{ y: -4 }}
     >
       <div className="rounded-2xl border border-black/10 dark:border-white/10 
                       bg-white/70 dark:bg-zinc-900/60 backdrop-blur p-5">
@@ -217,11 +232,11 @@ function ProjectCard({ p }) {
           ))}
         </div>
       </div>
-    </motion.a>
+    </a>
   );
 }
 
-/* ====== BRAND BADGE (fixe, plus haut) ====== */
+/* ====== BRAND BADGE ====== */
 function BrandBadge() {
   return (
     <div className="hidden lg:flex fixed left-10 top-[30%] z-30">
@@ -242,20 +257,98 @@ function BrandBadge() {
             />
           </div>
         </div>
-        <div className="mt-4 text-2xl font-extrabold tracking-wide drop-shadow 
-                        bg-gradient-to-r from-emerald-500 to-lime-500 bg-clip-text text-transparent">
-          {PSEUDO}
-        </div>
       </div>
     </div>
   );
 }
 
+/* ====== HERO ====== */
+function HeroBanner() {
+  return (
+    <section className="relative isolate overflow-hidden min-h-[70vh] grid place-items-center bg-transparent
+                        text-neutral-900 dark:text-neutral-100">
+      {/* glows (déjà via BackgroundFX) */}
+      <div className="relative z-10 w-full max-w-6xl px-6 grid gap-8 md:grid-cols-[360px,1fr] items-center">
+        {/* avatar */}
+        <div className="mx-auto md:mx-0">
+          <div className="relative">
+            <img
+              src={AVATAR_PATH}
+              alt="Avatar"
+              className="w-64 h-64 object-contain drop-shadow-[0_30px_60px_rgba(168,85,247,0.35)]"
+            />
+            <div className="absolute inset-0 rounded-full blur-2xl bg-fuchsia-600/15 dark:bg-fuchsia-600/25 -z-10 translate-y-4" />
+          </div>
+        </div>
+
+        {/* texte */}
+        <div className="space-y-6">
+          <div className="relative inline-block">
+            <span className="text-sm opacity-90">
+              Hello! I am <span className="text-fuchsia-500 dark:text-fuchsia-400 font-medium">Paolo Quetel</span>
+            </span>
+            <svg viewBox="0 0 120 60" className="absolute -top-10 -left-14 w-28 h-14 text-fuchsia-400/70">
+              <path d="M5,55 C35,15 70,5 110,15" fill="none" stroke="currentColor" strokeWidth="2" />
+              <path d="M105 12 L110 16 L103 17" fill="currentColor" />
+            </svg>
+          </div>
+
+          <p className="text-xs md:text-sm tracking-[0.2em] uppercase opacity-70">A Designer who</p>
+
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
+            <span className="block">Judges a book</span>
+            <span className="block">
+              by its{" "}
+              <span className="relative inline-block align-baseline px-3 py-1 font-extrabold">
+                <span className="relative z-10">cover</span>
+                {/* contour dégradé derrière le texte */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-full border-2 border-transparent
+                             [background:linear-gradient(transparent,transparent)_padding-box,linear-gradient(90deg,#a855f7,#8b5cf6,#22d3ee)_border-box] -z-10"
+                />
+                {/* glow doux derrière */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -inset-2 rounded-full blur-xl bg-fuchsia-500/20 -z-20"
+                />
+              </span>
+              …
+            </span>
+          </h1>
+
+          <p className="max-w-xl text-sm md:text-base opacity-80">
+            Because if the cover does not impress you, what else can?
+          </p>
+
+          <div className="pt-1">
+            <a
+              href="#projects"
+              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5
+                         bg-gradient-to-r from-fuchsia-600 to-indigo-500 text-white
+                         shadow-[0_12px_40px_-12px_rgba(168,85,247,0.6)]"
+            >
+              See my work
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ====== APP ====== */
 export default function App() {
-  const [dark, setDark] = useState(true);
+  // Thème: init depuis localStorage ou prefers-color-scheme, puis persiste
+  const [dark, setDark] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved === "dark";
+    return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+  });
+
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
+    localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
 
   const [showTop, setShowTop] = useState(false);
@@ -290,33 +383,15 @@ export default function App() {
       <BackgroundFX />
       <BrandBadge />
 
-      <main className="snap-y snap-proximity">
-        {/* HERO avec reveals */}
-        <SnapSection id="home" className="pt-8">
+      <main className="snap-y snap-proximity relative z-10">
+        {/* HERO */}
+        <HeroBanner />
+
+        {/* ABOUT */}
+        <SnapSection id="home">
           <motion.div className="max-w-4xl">
-            <Reveal dir="down">
-              <div className="inline-flex items-center gap-2 rounded-full 
-                              border border-black/15 dark:border-white/15 
-                              px-3 py-1 text-xs mb-6 
-                              bg-black/5 dark:bg-white/5 backdrop-blur">
-                <Star className="w-3 h-3 text-accent" /> Portfolio
-              </div>
-            </Reveal>
-
-            <Reveal dir="left">
-              <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-500 to-sky-500">
-                  {PROFILE.name}
-                </span>
-              </h1>
-            </Reveal>
-
-            <Reveal dir="left" delay={0.06}>
-              <p className="mt-3 text-xl md:text-2xl opacity-90">{PROFILE.title}</p>
-            </Reveal>
-
-            <Reveal dir="up" delay={0.12}>
-              <div className="mt-7 rounded-3xl 
+            <Reveal dir="up">
+              <div className="mt-2 rounded-3xl 
                               border border-black/10 dark:border-white/10 
                               bg-black/5 dark:bg-white/5 backdrop-blur px-7 py-6">
                 <p className="text-base md:text-lg leading-relaxed opacity-95">
@@ -349,20 +424,42 @@ export default function App() {
           </motion.div>
         </SnapSection>
 
-        {/* SKILLS (stagger) */}
+        {/* SKILLS */}
         <SnapSection id="skills">
           <Reveal>
             <SectionTitle>Skills</SectionTitle>
+
             <motion.div
-              className="rounded-3xl 
-                         border border-black/10 dark:border-white/10 
-                         bg-black/5 dark:bg-white/5 backdrop-blur p-6 md:p-10 min-h-[70vh]"
+              className="relative overflow-hidden rounded-3xl
+                         border border-black/10 dark:border-white/10
+                         bg-black/5 dark:bg-white/5 backdrop-blur p-6 md:p-10 min-h-[60vh]"
               variants={staggerContainer}
               initial="initial"
               whileInView="whileInView"
               viewport={{ once: true, amount: 0.2 }}
             >
-              <div className="grid gap-6 md:gap-7 [grid-template-columns:repeat(auto-fit,minmax(180px,1fr))]">
+              {/* glow discret haut-gauche */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -left-28 -top-28 w-[380px] h-[380px] rounded-full
+                           blur-3xl bg-gradient-to-br from-fuchsia-500/18 via-violet-500/12 to-transparent"
+              />
+              {/* gros glow bas-droit */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -right-24 -bottom-24 w-[560px] h-[560px] rounded-full
+                           blur-3xl bg-gradient-to-tr from-sky-500/0 via-cyan-500/14 to-emerald-500/22"
+              />
+              {/* trame de micro-points */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-[0.06]
+                           [background-image:radial-gradient(currentColor_1px,transparent_1px)]
+                           [background-size:14px_14px]"
+              />
+
+              {/* grille de tuiles */}
+              <div className="relative grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-7">
                 {SKILLS.map((s) => (
                   <motion.div key={s.t} variants={item}>
                     <SkillTile {...s} />
@@ -373,48 +470,30 @@ export default function App() {
           </Reveal>
         </SnapSection>
 
-        {/* EXPERIENCE (tuiles + stagger) */}
+        {/* EXPERIENCE */}
         <SnapSection id="experience">
-          <Reveal>
-            <SectionTitle>Experience</SectionTitle>
-            <motion.div
-              className="rounded-3xl 
-                         border border-black/10 dark:border-white/10 
-                         bg-black/5 dark:bg-white/5 backdrop-blur p-6 md:p-10 min-h-[70vh]"
-              variants={staggerContainer}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <div className="grid gap-6 md:gap-7 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
-                {EXPERIENCES.map((e) => (
-                  <motion.div key={e.title} variants={item}>
-                    <ExperienceTile {...e} />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </Reveal>
+          <SectionTitle>Experience</SectionTitle>
+          <div className="rounded-3xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 backdrop-blur p-6 md:p-10 min-h-[60vh]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7">
+              {EXPERIENCES.map((e) => (
+                <div key={e.title}>
+                  <ExperienceTile {...e} />
+                </div>
+              ))}
+            </div>
+          </div>
         </SnapSection>
 
-        {/* PROJECTS (stagger) */}
+        {/* PROJECTS */}
         <SnapSection id="projects">
-          <Reveal>
-            <SectionTitle>Projects</SectionTitle>
-            <motion.div
-              className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
-              variants={staggerContainer}
-              initial="initial"
-              whileInView="whileInView"
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              {PROJECTS.map((p) => (
-                <motion.div key={p.id} variants={item}>
-                  <ProjectCard p={p} />
-                </motion.div>
-              ))}
-            </motion.div>
-          </Reveal>
+          <SectionTitle>Projects</SectionTitle>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {PROJECTS.map((p) => (
+              <div key={p.id}>
+                <ProjectCard p={p} />
+              </div>
+            ))}
+          </div>
         </SnapSection>
 
         {/* CONTACT */}
@@ -457,7 +536,7 @@ export default function App() {
       {showTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 rounded-full 
+          className="fixed bottom-6 right-6 z-40 rounded-full 
                      border border-black/15 dark:border-white/15 
                      bg-black/5 dark:bg-white/10 backdrop-blur px-3 py-3 shadow hover:border-fuchsia-500/60"
           aria-label="Back to top"
