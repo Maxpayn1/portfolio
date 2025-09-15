@@ -8,6 +8,8 @@ import {
 const LOGO_PATH = `${import.meta.env.BASE_URL}maxpayn-logo.png.png`;
 const AVATAR_PATH = `${import.meta.env.BASE_URL}avatar.png`;
 const PSEUDO = "Maxpayn";
+const ASSET_sweetbonanza = `${import.meta.env.BASE_URL}assets/sweet-bonanza.png`
+
 
 /* ====== DATA ====== */
 const PROFILE = {
@@ -16,8 +18,8 @@ const PROFILE = {
   bioLong:
     "I'm Paolo Quetel, a design-minded student focused on creating clean visuals and performant UIs. I enjoy bridging design and code — from crafting assets to shipping small, polished web experiences. Im lover of sport (practice a lot football and gym) and of nature (like hiking or trekking). I love to learn and fight new challenges. I got a real will to learn and push me to get better in every aspects of life.",
   links: {
-    github: "https://github.com/paoloquetel",
-    linkedin: "https://www.linkedin.com/in/paoloquetel",
+    github: "https://github.com/Maxpayn1",
+    linkedin: "https://www.linkedin.com/in/paolo-quetel-9891a8285/",
     website: "",
     email: "paolo.quetel303005@gmail.com",
   },
@@ -27,6 +29,7 @@ const PROJECTS = [
   { id: 1, title: "Assets développement", type: "Professionnel", year: 2024, tech: ["Java"], description: "The desire to succeed in creating graphic assets for lightzino.", link: "#" },
   { id: 2, title: "Portfolio", type: "Scolaire", year: 2025, tech: ["Nginx"], description: "Simply the creation of my own Portfolio without skills in development.", link: "https://portfoliomaxpayne.vercel.app/" },
 ];
+
 
 const SKILLS = [
   { t: "Java", url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
