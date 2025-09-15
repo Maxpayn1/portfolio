@@ -240,14 +240,15 @@ function ProjectCard({ p }) {
 function BrandBadge() {
   return (
     <div className="hidden lg:flex fixed left-10 top-[30%] z-30">
-      <div className="flex flex-col items-center">
-        <div className="relative p-[4px] rounded-[28px] 
-                        bg-gradient-to-br from-fuchsia-500/70 via-violet-500/40 to-sky-500/60 
+      <div className="flex flex-col items-center gap-3">
+        <div className="relative p-[4px] rounded-[28px]
+                        bg-gradient-to-br from-fuchsia-500/70 via-violet-500/40 to-sky-500/60
                         shadow-[0_25px_80px_-20px_rgba(147,51,234,0.55)]">
-          <div className="rounded-[24px] border border-black/15 dark:border-white/15 
+          <div className="rounded-[24px] border border-black/15 dark:border-white/15
                           bg-white/60 dark:bg-white/5 backdrop-blur p-6">
+            {/* === Taille d'origine === */}
             <div
-              className="w-56 h-56 rounded-2xl 
+              className="w-56 h-56 rounded-2xl
                          ring-1 ring-black/10 dark:ring-white/10
                          shadow-[0_12px_40px_-16px_rgba(34,197,94,0.35)]
                          dark:shadow-[0_12px_40px_-16px_rgba(34,197,94,0.55)]
@@ -257,6 +258,11 @@ function BrandBadge() {
             />
           </div>
         </div>
+
+        {/* Sous-titre */}
+        <span className="text-sm font-medium text-fuchsia-400 dark:text-fuchsia-300">
+          Think about planet
+        </span>
       </div>
     </div>
   );
@@ -272,11 +278,14 @@ function HeroBanner() {
         {/* avatar */}
         <div className="mx-auto md:mx-0">
           <div className="relative">
-            <img
-              src={AVATAR_PATH}
-              alt="Avatar"
-              className="w-64 h-64 object-contain drop-shadow-[0_30px_60px_rgba(168,85,247,0.35)]"
-            />
+           <img
+  src={AVATAR_PATH}
+  alt="Avatar"
+  className="w-64 h-64 object-contain rounded-full
+             drop-shadow-[0_30px_60px_rgba(168,85,247,0.35)]
+             transition-transform duration-300 hover:scale-110 hover:drop-shadow-[0_35px_80px_rgba(168,85,247,0.6)]"
+/>
+
             <div className="absolute inset-0 rounded-full blur-2xl bg-fuchsia-600/15 dark:bg-fuchsia-600/25 -z-10 translate-y-4" />
           </div>
         </div>
